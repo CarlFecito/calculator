@@ -4,17 +4,17 @@ addNumbers()
 
 function addNumbers() {
     for (let i = 0; i <= 9; i++) {
-        addDiv(i, 'numbers')
+        addButton(i)
     }
 }
 
-function addDiv(num, cont) {
-    const box = document.getElementById(cont)
-    const newDiv = document.createElement("div");
-    newDiv.setAttribute("id", num)
-    newDiv.innerHTML = num
-    newDiv.setAttribute("class", 'square')
-    box.appendChild(newDiv)
+function addButton(num) {
+    const box = document.getElementById('numbers')
+    const newButton = document.createElement("button");
+    newButton.setAttribute("id", num)
+    newButton.innerHTML = num
+    newButton.setAttribute("class", 'square')
+    box.appendChild(newButton)
 }
 
 function display(input) {
