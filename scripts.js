@@ -13,3 +13,8 @@ function addDiv(num, cont) {
     newDiv.setAttribute("class", 'square')
     box.appendChild(newDiv)
 }
+
+function display(input) {
+    const screen = document.getElementById('screen')
+    let screenContent = ''
+}
