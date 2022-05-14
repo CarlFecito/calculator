@@ -1,9 +1,12 @@
+let screenContent = ''
+addNumbers()
+
+
 function addNumbers() {
-    for (i = 0; i <= 9; i++) {
+    for (let i = 0; i <= 9; i++) {
         addDiv(i, 'numbers')
     }
 }
-
 
 function addDiv(num, cont) {
     const box = document.getElementById(cont)
@@ -16,5 +19,5 @@ function addDiv(num, cont) {
 
 function display(input) {
     const screen = document.getElementById('screen')
-    let screenContent = ''
+    let screenContent = screenContent + input
 }
