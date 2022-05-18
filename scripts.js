@@ -7,6 +7,8 @@ clearButton.addEventListener('click', () => {
     clear()
 })
 
+
+
 const selectNumbers = document.querySelectorAll('.nmbr')
 selectNumbers.forEach((button => {
     button.addEventListener('click', () => {
@@ -14,10 +16,16 @@ selectNumbers.forEach((button => {
     })
 }))
 
-let calcScreen = document.querySelector('#screen')
+
 function displayInput(inpt) {
     screenContent = screenContent + inpt
-    calcScreen.innerText = screenContent    
+    display(screenContent)    
+}
+
+let calcScreen = document.querySelector('#screen')
+
+function display(content) {
+    calcScreen.innerText = content
 }
 
 function drawNumbers() {
@@ -37,8 +45,36 @@ function drawButton(num) {
 
 function clear() {
     calcScreen.innerText = 0
+    screenContent = ''
+    cache = 0
+    operation = 0
 }
 
-/* para las operaciones usar un array 0, operaciones
-                                #1  , operaciones   
-                                #2 , operaciones */
+let operation = 0
+
+function operator(opr) {
+    screenContent = Number(screenContent)
+    if (operation === '/' && screenContent != 0 && screenContent != '') {
+        cache = cache / screenContent
+    } else if (operation === '+' || operation === 0) {
+        cache = cache + screenContent
+    } else if (operation === '-') {
+        cache = cache - screenContent
+    } else if (operation === '*') {
+        cache = cache * screenContent
+    } else {
+        alert('error')
+    }
+    operation = opr
+    display(cache)
+}
+
+
+
+const oprButtons = document.querySelectorAll('#opr')
+oprButtons.forEach((button => {
+    button.addEventListener('click', () => {
+        operator(button.innerText)
+    })
+}))
+
