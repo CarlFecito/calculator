@@ -4,6 +4,9 @@
     <title>Document</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <script src="scripts.js" defer></script>
@@ -11,29 +14,32 @@
 </head>
 <body>
     <div id="bdy">
-        <div id="top">
-            <div id="screen">0</div>
-            <div id="extra">
-                <button id="c" class="square">C</button>
-                <div class="space"></div>
-                <button id="del" class="square">DEL</button>
+        <div id="screen">0</div>
+        <div id="buttons">
+            <div class="left">
+                <button id="c" class="dark">C</button>
+                <button id="sign" class="dark"><span>&#177;</span></button>
+                <button id="del" class="dark del"><span>&#9003;</span></button>
+                <button id="nmbr" class="light">7</button>
+                <button id="nmbr" class="light">8</button>
+                <button id="nmbr" class="light">9</button>
+                <button id="nmbr" class="light">4</button>
+                <button id="nmbr" class="light">5</button>
+                <button id="nmbr" class="light">6</button>
+                <button id="nmbr" class="light">1</button>
+                <button id="nmbr" class="light">2</button>
+                <button id="nmbr" class="light">3</button>
+                <button id="nmbr" class="light">0</button>
+                <button id="nmbr" class="light">.</button>
+                <button id="opr" class="light color"><span>&#61;</span></button>
+            </div>
+            <div class="right">
+                <button class="dark"><span>&#247;</span></button>
+                <button class="dark"><span>&#215;</span></button>
+                <button class="dark"><span>&#8722;</span></button>
+                <button class="dark large"><span>&#43;</span></button>
             </div>
         </div>
-        <div id="bottom">
-            <div id="left">
-                <div id="numbers">
-                    <button id="btn0" class="square nmbr">0</button>
-                    <button id="point" class="square nmbr">.</button>
-                    <button id="equal" class="square">=</button>                </div>
-            </div>
-            <div id="operators">
-                <button id="opr" class="square">/</button>
-                <button id="opr" class="square">*</button>
-                <button id="opr" class="square">-</button>
-                <button id="opr" class="square">+</button>
-            </div>
-        </div>
-    </div>
-    
+    </div> 
 </body>
 </html>

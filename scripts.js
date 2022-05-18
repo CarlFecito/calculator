@@ -1,21 +1,18 @@
 let screenContent = ''
 let cache = 0
-drawNumbers()
 
-const clearButton = document.getElementById('C')
+const clearButton = document.getElementById('c')
 clearButton.addEventListener('click', () => {
     clear()
 })
 
-
-
-const selectNumbers = document.querySelectorAll('.nmbr')
+const selectNumbers = document.querySelectorAll('#nmbr')
 selectNumbers.forEach((button => {
     button.addEventListener('click', () => {
         displayInput(button.innerText)
+        console.log('warever')
     })
 }))
-
 
 function displayInput(inpt) {
     screenContent = screenContent + inpt
