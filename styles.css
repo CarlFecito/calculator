@@ -36,10 +36,10 @@ html {
 }
 
 #screen {
-    padding: 50px 10px 5px 5px;
+    padding: 50px 10px 10px 10px;
     width: 400px;
     font-size: 120px;
-    height: 170px;
+    height: 180px;
     text-align: end;
     background-color: #232931;
     color: #4ECCA3;
