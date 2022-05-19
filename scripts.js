@@ -1,4 +1,6 @@
 let calcScreen = document.querySelector('#screen')
+let screenPrev = document.querySelector('#prev')
+let screenSign = document.querySelector('#sign')
 let screenContent = ''
 let actualNumber = 0
 let previousNumber = ''
@@ -9,6 +11,8 @@ clear()
 
 function clear() {
     calcScreen.innerText = 0
+    screenPrev.innerText = ''
+    screenSign.innerText = ''
     screenContent = ''
     actualNumber = 0
     previousNumber = ''
@@ -24,11 +28,11 @@ clearButton.addEventListener('click', () => {
 const selectNumbers = document.querySelectorAll('#nmbr')
 selectNumbers.forEach((button => {
     button.addEventListener('click', () => {
-        displayInput(button.innerText)
+        numberInput(button.innerText)
     })
 }))
 
-function displayInput(inpt) {
+function numberInput(inpt) {
     screenContent = screenContent + inpt
     display(screenContent)    
 }
@@ -37,44 +41,59 @@ function display(content) {
     calcScreen.innerText = content
 }
 
+function displayOpr(input) {
+    if (input === 'divide') {
+        screenSign.innerHTML = `<span>&#247;</span>`
+    } else if (input === 'mult') {
+        screenSign.innerHTML = `<span>&#215;</span>`
+    } else if (input === 'rest') {
+        screenSign.innerHTML = `<span>&#8722;</span>`
+    } else if (input === 'sum') {
+        screenSign.innerHTML = `<span>&#43;</span>`
+    } else if (input === 'equal') {
+        screenSign.innerHTML = `<span>&#61;</span>`
+    } else {
+        console.log('error')
+    }
+}
+
+function displayPrev(content) {
+    screenPrev.innerText = content
+}
+
 const oprButtons = document.querySelectorAll('.opr')
 oprButtons.forEach((button => {
     button.addEventListener('click', () => {
         operator(button.id)
+        displayOpr(button.id)
     })
 }))
 
 function operator(opr) {
     actualNumber = Number(screenContent)
-    console.log(prevOperation)
     if (opr === 'equal') {
         screenContent = ''
         calculate(previousNumber, actualNumber, prevOperation)
-        prevOperation = 'skip'
-        
     } else if (prevOperation === 'skip') {
         previousNumber = actualNumber
         prevOperation = opr
-        console.log(prevOperation)
-        calcScreen.innerText = previousNumber
+        displayPrev(actualNumber)
         screenContent = ''
+        display('0')
     } else {
         actualOperation = opr
         calcScreen.innerText = 0
         screenContent = ''
         calculate(previousNumber, actualNumber, prevOperation)
         prevOperation = actualOperation
-        
     }
 }
 
 function calculate(number1, number2, operation1) {
-    console.log(operation1)
     if (operation1 === 'divide' && number2 === 0) {
         alert(`can't divide by zero`)
     } else if (operation1 === 'divide') {
         result = number1 / number2
-        console.log(result)
         end(result)
     } else if (operation1 === 'mult') {
         result = number1 * number2
@@ -96,4 +115,6 @@ function calculate(number1, number2, operation1) {
 function end(num) {
     calcScreen.innerText = num
     previousNumber = num
+    displayPrev(previousNumber)
+    display('0')
 }

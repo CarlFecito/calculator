@@ -35,15 +35,28 @@ html {
     background-color: #082032;
 }
 
-#screen {
-    padding: 50px 10px 10px 10px;
+#miniScreen {
+    padding: 15px;;
     width: 400px;
-    font-size: 120px;
-    height: 180px;
+    font-size: 40px;
+    height: 60px;
     text-align: end;
     background-color: #232931;
     color: #4ECCA3;
     border-radius: 20px 20px 0 0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+#screen {
+    padding: 15px;
+    width: 400px;
+    font-size: 80px;
+    height: 110px;
+    text-align: end;
+    background-color: #232931;
+    color: #4ECCA3;
     font-weight: 700;
 }
 
