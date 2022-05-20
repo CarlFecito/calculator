@@ -1,3 +1,79 @@
+let displayedNumber = ''
+let actualOperation = ''
+let prevOperation = ''
+let prevnumber = ''
+let screen = document.querySelector('#screen')
+const nmbrButtons = document.querySelectorAll('#nmbr')
+const oprButtons = document.querySelectorAll('.opr')
+/*
+
+function clear() {
+
+}
+
+function del() {
+
+}
+
+*/
+
+function getNumber(nmbr) {
+    if (nmbr === '.' && displayedNumber.includes('.')) return
+    displayedNumber = displayedNumber + nmbr
+    displayNumber(displayedNumber)
+}
+
+function displayNumber(nmbr) {
+    screen.innerText = nmbr
+}
+
+
+function selectOperation(opr) {
+    if (actualOperation === '') return
+    if (prevOperation !== '') {
+        calculate()
+    }
+    actualOperation = opr
+    prevOperation = actualOperation
+    actualOperation = ''
+}
+
+
+
+function calculate() {
+    let res
+    let number1 = Number(prevNumber)
+    let number2 = Number(actualNumber)
+    if (isNaN()) || 
+}
+
+
+
+
+nmbrButtons.forEach(button => {
+   button.addEventListener('click', () => {
+        getNumber(button.innerText)
+   }) 
+});
+
+
+oprButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        selectOperation(button.id)
+        actualOperation = button.id
+    }) 
+ });
+
+
+
+//*********************
+
+/////// olf code
+
+
+
+
+/*
 let calcScreen = document.querySelector('#screen')
 let screenPrev = document.querySelector('#prev')
 let screenSign = document.querySelector('#sign')
@@ -74,6 +150,7 @@ function operator(opr) {
     if (opr === 'equal') {
         screenContent = ''
         calculate(previousNumber, actualNumber, prevOperation)
+        prevOperation = 'skip'
     } else if (prevOperation === 'skip') {
         previousNumber = actualNumber
         prevOperation = opr
@@ -116,5 +193,6 @@ function end(num) {
     calcScreen.innerText = num
     previousNumber = num
     displayPrev(previousNumber)
-    display('0')
+    actualNumber = 0
 }
+*/
