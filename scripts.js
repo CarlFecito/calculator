@@ -1,198 +1,87 @@
-let displayedNumber = ''
+const calcScreen = document.getElementById('screen')
+const miniScreen = document.getElementById('prevScreen')
+const nmbrButtons = document.querySelectorAll('#nmbr')
+const equalButton = document.getElementById('equal')
+const oprButtons = document.querySelectorAll('.opr')
+const clearButton = document.getElementById('c')
+const signButton = document.getElementById('sign')
+const delButton = document.getElementById('del')
+
+let actualInput
+let prevInput
 let actualOperation = ''
 let prevOperation = ''
-let prevnumber = ''
-let screen = document.querySelector('#screen')
-const nmbrButtons = document.querySelectorAll('#nmbr')
-const oprButtons = document.querySelectorAll('.opr')
-/*
 
 function clear() {
-
-}
-
-function del() {
-
-}
-
-*/
-
-function getNumber(nmbr) {
-    if (nmbr === '.' && displayedNumber.includes('.')) return
-    displayedNumber = displayedNumber + nmbr
-    displayNumber(displayedNumber)
-}
-
-function displayNumber(nmbr) {
-    screen.innerText = nmbr
-}
-
-
-function selectOperation(opr) {
-    if (actualOperation === '') return
-    if (prevOperation !== '') {
-        calculate()
-    }
-    actualOperation = opr
-    prevOperation = actualOperation
+    actualInput = undefined
+    prevInput = undefined
     actualOperation = ''
+    prevOperation = ''
+
 }
 
-
-
-function calculate() {
-    let res
-    let number1 = Number(prevNumber)
-    let number2 = Number(actualNumber)
-    if (isNaN()) || 
-}
-
-
-
-
-nmbrButtons.forEach(button => {
-   button.addEventListener('click', () => {
-        getNumber(button.innerText)
-   }) 
-});
-
-
-oprButtons.forEach(button => {
+nmbrButtons.forEach((button => {
     button.addEventListener('click', () => {
-        selectOperation(button.id)
-        actualOperation = button.id
-    }) 
- });
-
-
-
-//*********************
-
-/////// olf code
-
-
-
-
-/*
-let calcScreen = document.querySelector('#screen')
-let screenPrev = document.querySelector('#prev')
-let screenSign = document.querySelector('#sign')
-let screenContent = ''
-let actualNumber = 0
-let previousNumber = ''
-let actualOperation = ''
-let prevOperation = 'skip'
-let result
-clear()
-
-function clear() {
-    calcScreen.innerText = 0
-    screenPrev.innerText = ''
-    screenSign.innerText = ''
-    screenContent = ''
-    actualNumber = 0
-    previousNumber = ''
-    actualOperation = ''
-    prevOperation = 'skip'
-}
-
-const clearButton = document.getElementById('c')
-clearButton.addEventListener('click', () => {
-    clear()
-})
-
-const selectNumbers = document.querySelectorAll('#nmbr')
-selectNumbers.forEach((button => {
-    button.addEventListener('click', () => {
-        numberInput(button.innerText)
+        input(button.innerText)
     })
-}))
+}));
 
-function numberInput(inpt) {
-    screenContent = screenContent + inpt
-    display(screenContent)    
-}
-
-function display(content) {
-    calcScreen.innerText = content
-}
-
-function displayOpr(input) {
-    if (input === 'divide') {
-        screenSign.innerHTML = `<span>&#247;</span>`
-    } else if (input === 'mult') {
-        screenSign.innerHTML = `<span>&#215;</span>`
-    } else if (input === 'rest') {
-        screenSign.innerHTML = `<span>&#8722;</span>`
-    } else if (input === 'sum') {
-        screenSign.innerHTML = `<span>&#43;</span>`
-    } else if (input === 'equal') {
-        screenSign.innerHTML = `<span>&#61;</span>`
+function input(inpt) {
+    if (inpt != '.') {
+        addToScreen(inpt)
+    } else if (calcScreen.innerText.includes('.')) {
+        return
     } else {
-        console.log('error')
+        addToScreen(inpt)
     }
 }
 
-function displayPrev(content) {
-    screenPrev.innerText = content
+function addToScreen(inpt) {
+    if (calcScreen.innerText != '0') {
+        calcScreen.innerText += inpt 
+    } else {
+        calcScreen.innerText = inpt
+    }
 }
 
-const oprButtons = document.querySelectorAll('.opr')
+function addToMiniScreen(inpt) {
+    miniScreen.innerText = inpt
+}
+
+    
+
 oprButtons.forEach((button => {
     button.addEventListener('click', () => {
-        operator(button.id)
-        displayOpr(button.id)
+        newOperation(button.id)
     })
-}))
+}));
 
-function operator(opr) {
-    actualNumber = Number(screenContent)
-    if (opr === 'equal') {
-        screenContent = ''
-        calculate(previousNumber, actualNumber, prevOperation)
-        prevOperation = 'skip'
-    } else if (prevOperation === 'skip') {
-        previousNumber = actualNumber
-        prevOperation = opr
-        displayPrev(actualNumber)
-        screenContent = ''
-        display('0')
-    } else {
+function newOperation(opr) {
+    if (prevOperation != '') {
         actualOperation = opr
-        calcScreen.innerText = 0
-        screenContent = ''
-        calculate(previousNumber, actualNumber, prevOperation)
-        prevOperation = actualOperation
-    }
-}
-
-function calculate(number1, number2, operation1) {
-    if (operation1 === 'divide' && number2 === 0) {
-        alert(`can't divide by zero`)
-    } else if (operation1 === 'divide') {
-        result = number1 / number2
-        end(result)
-    } else if (operation1 === 'mult') {
-        result = number1 * number2
-        console.log(result)
-        end(result)
-    } else if (operation1 === 'rest') {
-        result = number1 - number2
-        console.log(result)
-        end(result)
-    } else if (operation1 === 'sum') {
-        result = number1 + number2
-        console.log(result)
-        end(result)
+        calculate(prevOperation)
+        calcScreen.innerText = '0'
     } else {
-        console.log('error')
+        prevOperation = opr
+        addToMiniScreen(calcScreen.innerText)
+        calcScreen.innerText = '0'
     }
 }
 
-function end(num) {
-    calcScreen.innerText = num
-    previousNumber = num
-    displayPrev(previousNumber)
-    actualNumber = 0
+
+function calculate(opr) {
+    let number1 = Number(miniScreen.innerText)
+    let number2 = Number(calcScreen.innerText)
+    let result
+    if (opr === 'divide') {
+        result = number1 / number2
+    } else if (opr === 'mult') {
+        result = number1 * number2
+    } else if (opr === 'rest') {
+        result = number1 - number2
+    } else if (opr === 'sum') {
+        result = number1 + number2
+    } else return
+    prevOperation = actualOperation
+    prevScreen.innerText = result
 }
-*/
