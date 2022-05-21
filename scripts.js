@@ -1,5 +1,6 @@
 const calcScreen = document.getElementById('screen')
-const miniScreen = document.getElementById('prevScreen')
+const prevScreen = document.getElementById('prevScreen')
+const constScreen = document.getElementById('constScreen')
 const nmbrButtons = document.querySelectorAll('#nmbr')
 const equalButton = document.getElementById('equal')
 const oprButtons = document.querySelectorAll('.opr')
@@ -11,10 +12,11 @@ let actualInput
 let prevInput
 let actualOperation = ''
 let prevOperation = ''
+let actualOprSign = ''
 
 function clear() {
-    actualInput = undefined
-    prevInput = undefined
+    actualInput = ''
+    prevInput = ''
     actualOperation = ''
     prevOperation = ''
 
@@ -28,60 +30,83 @@ nmbrButtons.forEach((button => {
 
 function input(inpt) {
     if (inpt != '.') {
-        addToScreen(inpt)
-    } else if (calcScreen.innerText.includes('.')) {
+        prevScreen.innerText += inpt
+    } else if (prevScreen.innerText === '') {
+        prevScreen.innerText = '0.'
+    } else if (prevScreen.innerText.includes('.')) {
         return
     } else {
-        addToScreen(inpt)
+        prevScreen.innerText += inpt
     }
 }
+
 
 function addToScreen(inpt) {
-    if (calcScreen.innerText != '0') {
-        calcScreen.innerText += inpt 
-    } else {
-        calcScreen.innerText = inpt
-    }
-}
-
-function addToMiniScreen(inpt) {
-    miniScreen.innerText = inpt
+    prevScreen.innerText = inpt
 }
 
     
-
 oprButtons.forEach((button => {
     button.addEventListener('click', () => {
+        getNumbers()
         newOperation(button.id)
     })
 }));
 
+
+
+// MUST ADD 0. TO getNumbers
+
+
+function getNumbers() {
+    if (prevScreen != '' && actualInput != '') {
+       prevInput = actualInput
+       actualInput = Number(prevScreen.innerText)
+    } else if (prevScreen != '' && actualInput === '') {
+        actualInput = Number(prevScreen.innerText)
+    } else {
+        console.log('getNumber error')
+    }
+}
+
 function newOperation(opr) {
     if (prevOperation != '') {
         actualOperation = opr
+        prevScreen.innerText = ''
         calculate(prevOperation)
-        calcScreen.innerText = '0'
     } else {
         prevOperation = opr
-        addToMiniScreen(calcScreen.innerText)
-        calcScreen.innerText = '0'
+        constScreen.innerHTML = prevScreen.innerText + ' ' + oprToSign(opr)
+        prevScreen.innerText = ''
     }
 }
 
 
 function calculate(opr) {
-    let number1 = Number(miniScreen.innerText)
-    let number2 = Number(calcScreen.innerText)
     let result
     if (opr === 'divide') {
-        result = number1 / number2
+        result = prevInput / actualInput
     } else if (opr === 'mult') {
-        result = number1 * number2
+        result = prevInput * actualInput
     } else if (opr === 'rest') {
-        result = number1 - number2
+        result = prevInput - actualInput
     } else if (opr === 'sum') {
-        result = number1 + number2
-    } else return
+        result = prevInput + actualInput
+    } else {
+        console.log('calculate error')
+    }
     prevOperation = actualOperation
-    prevScreen.innerText = result
+    constScreen.innerHTML = result + ' ' + oprToSign(prevOperation)
+}
+
+function oprToSign(opr) {
+    if (opr === 'divide') {
+        return '<span>&#247;</span>'
+    } else if (opr === 'mult') {
+        return '<span>&#215;</span>'
+    } else if (opr === 'rest') {
+        return '<span>&#8722;</span>'
+    } else if (opr === 'sum') {
+        return '<span>&#43;</span>'
+    }
 }
