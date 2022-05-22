@@ -51,6 +51,16 @@ function addToScreen(inpt) {
     prevScreen.innerText = inpt
 }
 
+signButton.addEventListener('click', () => {
+    console.log('sign function')
+    if (prevScreen.innerText.length > 0) {
+        if (prevScreen.innerText.charAt(0) === `-`) {
+            prevScreen.innerText = prevScreen.innerText.substring(1)
+        } else {
+            prevScreen.innerText = '-' + prevScreen.innerText
+        }
+    } else return
+})
     
 oprButtons.forEach((button => {
     button.addEventListener('click', () => {
