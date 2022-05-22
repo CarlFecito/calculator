@@ -56,7 +56,7 @@ oprButtons.forEach((button => {
     button.addEventListener('click', () => {
         if (button.id === 'rest' && oprScreen.innerHTML != '' && prevScreen.innerText === '') {
             prevScreen.innerText += '-'
-        } else if (Number(prevScreen.innerText) != NaN && Number(prevScreen.innerText) != '') {
+        } else if (Number(prevScreen.innerText) != NaN && Number(prevScreen.innerText) != null) {
             newOperation(button.id)
         } else {
             prevOperation = button.id
