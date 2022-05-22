@@ -1,5 +1,6 @@
 const calcScreen = document.getElementById('screen')
 const prevScreen = document.getElementById('prevScreen')
+const oprScreen = document.getElementById('oprScreen')
 const constScreen = document.getElementById('constScreen')
 const nmbrButtons = document.querySelectorAll('#nmbr')
 const equalButton = document.getElementById('equal')
@@ -8,23 +9,28 @@ const clearButton = document.getElementById('c')
 const signButton = document.getElementById('sign')
 const delButton = document.getElementById('del')
 
-let actualInput
-let prevInput
 let actualOperation = ''
 let prevOperation = ''
-let actualOprSign = ''
 
 function clear() {
-    actualInput = ''
-    prevInput = ''
+    oprScreen.innerHTML = ''
+    prevScreen.innerText = ''
+    constScreen.innerText = ''
+    calcScreen.innerText = ''
     actualOperation = ''
     prevOperation = ''
-
 }
+
+clearButton.addEventListener('click', () => {
+    clear()
+})
+
+/// FALTA ARREGLAR EL SIGNO MENOS PARA QUE PONGA NUMEROS NEGARIVOS
 
 nmbrButtons.forEach((button => {
     button.addEventListener('click', () => {
         input(button.innerText)
+        checkResult()
     })
 }));
 
@@ -48,42 +54,35 @@ function addToScreen(inpt) {
     
 oprButtons.forEach((button => {
     button.addEventListener('click', () => {
-        getNumbers()
-        newOperation(button.id)
+        if (button.id === 'rest' && oprScreen.innerHTML != '' && prevScreen.innerText === '') {
+            prevScreen.innerText += '-'
+        } else if (Number(prevScreen.innerText) != NaN && Number(prevScreen.innerText) != '') {
+            newOperation(button.id)
+        } else {
+            prevOperation = button.id
+            oprScreen.innerHTML = oprToSign(button.id)
+        }
     })
 }));
 
 
-
-// MUST ADD 0. TO getNumbers
-
-
-function getNumbers() {
-    if (prevScreen != '' && actualInput != '') {
-       prevInput = actualInput
-       actualInput = Number(prevScreen.innerText)
-    } else if (prevScreen != '' && actualInput === '') {
-        actualInput = Number(prevScreen.innerText)
-    } else {
-        console.log('getNumber error')
-    }
-}
-
 function newOperation(opr) {
-    if (prevOperation != '') {
+    if (oprScreen.innerHTML != '') {
         actualOperation = opr
-        prevScreen.innerText = ''
         calculate(prevOperation)
     } else {
         prevOperation = opr
-        constScreen.innerHTML = prevScreen.innerText + ' ' + oprToSign(opr)
-        prevScreen.innerText = ''
+        constScreen.innerText = prevScreen.innerText
+        oprScreen.innerHTML = oprToSign(opr)
+        prevScreen.innerText = ''    
     }
 }
 
 
 function calculate(opr) {
     let result
+    let prevInput = Number(constScreen.innerText)
+    let actualInput = Number(prevScreen.innerText)
     if (opr === 'divide') {
         result = prevInput / actualInput
     } else if (opr === 'mult') {
@@ -96,7 +95,9 @@ function calculate(opr) {
         console.log('calculate error')
     }
     prevOperation = actualOperation
-    constScreen.innerHTML = result + ' ' + oprToSign(prevOperation)
+    constScreen.innerText = result
+    oprScreen.innerHTML = oprToSign(prevOperation)
+    prevScreen.innerText = ''
 }
 
 function oprToSign(opr) {
@@ -109,4 +110,28 @@ function oprToSign(opr) {
     } else if (opr === 'sum') {
         return '<span>&#43;</span>'
     }
+}
+
+function checkResult() {
+    if (prevScreen != '' && oprScreen.innerHTML != '') {
+        tempResult(prevOperation)
+    } console.log('no operation yet to show')
+}
+
+function tempResult(opr) {
+    let result
+    let prevInput = Number(constScreen.innerText)
+    let actualInput = Number(prevScreen.innerText)
+    if (opr === 'divide') {
+        result = prevInput / actualInput
+    } else if (opr === 'mult') {
+        result = prevInput * actualInput
+    } else if (opr === 'rest') {
+        result = prevInput - actualInput
+    } else if (opr === 'sum') {
+        result = prevInput + actualInput
+    } else {
+        console.log('calculate error')
+    }
+    calcScreen.innerText = result
 }

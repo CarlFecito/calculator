@@ -38,8 +38,8 @@ html {
 #miniScreenContainer {
     padding: 15px;;
     width: 400px;
-    font-size: 40px;
-    height: 60px;
+    font-size: 60px;
+    height: 90px;
     text-align: end;
     background-color: #232931;
     color: #4ECCA3;
@@ -47,17 +47,17 @@ html {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+    font-weight: 700;
 }
 
 #screen {
-    padding: 15px;
+    padding: 10px;
     width: 400px;
-    font-size: 80px;
-    height: 110px;
+    font-size: 30px;
+    height: 50px;
     text-align: end;
     background-color: #232931;
     color: #4ECCA3;
-    font-weight: 700;
 }
 
 #buttons {
